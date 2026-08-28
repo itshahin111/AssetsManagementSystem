@@ -18,6 +18,7 @@ const deletingId = ref(null);
 const canManageBuildings = computed(() => auth.can('buildings.create'));
 const canManageFloors = computed(() => auth.can('floors.create'));
 const canManageRooms = computed(() => auth.can('rooms.create'));
+const canManageRoomTypes = computed(() => auth.can('room_types.create'));
 const canDeleteBuildings = computed(() => auth.can('buildings.delete'));
 const canDeleteFloors = computed(() => auth.can('floors.delete'));
 const canDeleteRooms = computed(() => auth.can('rooms.delete'));
@@ -222,7 +223,7 @@ onBeforeUnmount(() => window.removeEventListener('asset-system:unauthenticated',
                             <p class="text-xs font-semibold uppercase tracking-[0.16em] text-sky-600">Reference data</p>
                             <h2 class="mt-1 text-lg font-semibold">Room types</h2>
                         </div>
-                        <button v-if="canManageRooms" class="mini-button" @click="openEditor('room_type')">+ Add</button>
+                        <button v-if="canManageRoomTypes" class="mini-button" @click="openEditor('room_type')">+ Add</button>
                     </div>
                     <p class="mt-2 text-sm leading-5 text-slate-500">Use types to make classroom, laboratory, office, and shared-space records consistent.</p>
 
@@ -233,9 +234,9 @@ onBeforeUnmount(() => window.removeEventListener('asset-system:unauthenticated',
                                 <span :class="roomType.status === 'active' ? 'status-active-light' : 'status-inactive-light'">{{ roomType.status }}</span>
                             </div>
                             <p v-if="roomType.description" class="mt-1 text-xs leading-5 text-slate-500">{{ roomType.description }}</p>
-                            <div v-if="auth.can('rooms.update') || auth.can('rooms.delete')" class="mt-2 flex gap-3 text-xs font-semibold">
-                                <button v-if="auth.can('rooms.update')" class="text-sky-700 hover:text-sky-900" @click="openEditor('room_type', roomType)">Edit</button>
-                                <button v-if="auth.can('rooms.delete')" class="text-rose-700 hover:text-rose-900" @click="remove('room_type', roomType)">Delete</button>
+                            <div v-if="auth.can('room_types.update') || auth.can('room_types.delete')" class="mt-2 flex gap-3 text-xs font-semibold">
+                                <button v-if="auth.can('room_types.update')" class="text-sky-700 hover:text-sky-900" @click="openEditor('room_type', roomType)">Edit</button>
+                                <button v-if="auth.can('room_types.delete')" class="text-rose-700 hover:text-rose-900" @click="remove('room_type', roomType)">Delete</button>
                             </div>
                         </li>
                     </ul>

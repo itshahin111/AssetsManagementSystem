@@ -1,6 +1,27 @@
 <script setup>
-import { computed, ref, watch } from 'vue';
+import { computed, h, ref, watch, defineComponent } from 'vue';
 import { locationApi } from '../api/locations';
+
+const Field = defineComponent({
+    props: {
+        label: String,
+        hint: String,
+        error: Array,
+    },
+    setup(props, { slots }) {
+        return () =>
+            h('label', { class: 'block' }, [
+                h('span', { class: 'text-sm font-medium text-slate-700' }, props.label ?? ''),
+                props.hint
+                    ? h('span', { class: 'mt-1 block text-xs text-slate-500' }, props.hint)
+                    : null,
+                slots.default?.(),
+                props.error?.length
+                    ? h('span', { class: 'mt-1.5 block text-xs font-medium text-rose-600' }, props.error[0])
+                    : null,
+            ]);
+    },
+});
 
 const props = defineProps({
     kind: { type: String, required: true },
@@ -176,23 +197,6 @@ async function submit() {
         </section>
     </div>
 </template>
-
-<script>
-export default {
-    components: {
-        Field: {
-            props: { label: String, hint: String, error: Array },
-            template: `
-                <label class="block">
-                    <span class="text-sm font-medium text-slate-700">{{ label }}</span>
-                    <span v-if="hint" class="mt-1 block text-xs text-slate-500">{{ hint }}</span>
-                    <slot />
-                    <span v-if="error" class="mt-1.5 block text-xs font-medium text-rose-600">{{ error[0] }}</span>
-                </label>`,
-        },
-    },
-};
-</script>
 
 <style scoped>
 @reference "../../css/app.css";

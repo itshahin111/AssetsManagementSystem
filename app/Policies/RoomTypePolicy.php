@@ -12,21 +12,21 @@ class RoomTypePolicy
 
     public function viewAny(User $user): bool
     {
-        return $this->hasPermission($user, 'rooms.view');
+        return $this->hasPermission($user, 'room_types.view');
     }
 
     public function create(User $user): bool
     {
-        return $this->hasPermission($user, 'rooms.create');
+        return $this->hasPermission($user, 'room_types.create');
     }
 
     public function update(User $user, RoomType $roomType): bool
     {
-        return $this->hasPermission($user, 'rooms.update');
+        return $this->hasPermission($user, 'room_types.update');
     }
 
     public function delete(User $user, RoomType $roomType): bool
     {
-        return $this->hasPermission($user, 'rooms.delete');
+        return $this->hasPermission($user, 'room_types.delete');
     }
 }

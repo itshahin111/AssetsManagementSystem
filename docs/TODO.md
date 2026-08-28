@@ -8,18 +8,18 @@
 - [ ] Verify CI skeleton
 
 ## Phase 1 — Location Hierarchy
-- [ ] Building
-- [ ] Floor
-- [ ] RoomType
-- [ ] Room
-- [ ] Policies
-- [ ] Form Requests
-- [ ] API Resources
-- [ ] Controllers
-- [ ] Seeders
-- [ ] Feature/unit tests
-- [ ] Vue Explorer
-- [ ] CRUD forms
+- [x] Building
+- [x] Floor
+- [x] RoomType
+- [x] Room
+- [x] Policies
+- [x] Form Requests
+- [x] API Resources
+- [x] Controllers
+- [x] Seeders
+- [x] Feature/unit tests
+- [x] Vue Explorer
+- [x] CRUD forms
 
 ## Phase 2 — Asset Taxonomy
 - [ ] AssetCategory
