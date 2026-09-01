@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AssetCategoryController;
+use App\Http\Controllers\Api\V1\AssetTypeController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\BuildingController;
 use App\Http\Controllers\Api\V1\FloorController;
@@ -23,5 +25,8 @@ Route::prefix('v1')->group(function (): void {
 
         Route::apiResource('room-types', RoomTypeController::class)->except(['show']);
         Route::apiResource('rooms', RoomController::class);
+
+        Route::apiResource('asset-categories', AssetCategoryController::class);
+        Route::apiResource('asset-types', AssetTypeController::class);
     });
 });

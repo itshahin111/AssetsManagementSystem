@@ -7,7 +7,7 @@
 - [ ] Verify base configuration
 - [ ] Verify CI skeleton
 
-## Phase 1 — Location Hierarchy
+## Phase 1 â€” Location Hierarchy
 - [x] Building
 - [x] Floor
 - [x] RoomType
@@ -21,15 +21,20 @@
 - [x] Vue Explorer
 - [x] CRUD forms
 
-## Phase 2 — Asset Taxonomy
-- [ ] AssetCategory
-- [ ] AssetType
-- [ ] tracking_type
-- [ ] CRUD
-- [ ] Seeders
-- [ ] Vue forms
 
-## Phase 3 — Core Assets
+
+## Phase 2 — Asset Taxonomy
+- [x] AssetCategory
+- [x] AssetType
+- [x] tracking_type
+- [x] CRUD
+- [x] Seeders
+- [x] Vue forms/pages
+- [x] Permissions
+- [x] Policies
+- [x] Tests
+
+## Phase 3 â€” Core Assets
 - [ ] Asset
 - [ ] AssetLocation
 - [ ] Initial placement
@@ -38,54 +43,54 @@
 - [ ] Asset create/edit
 - [ ] Asset detail
 
-## Phase 4 — Transfers
+## Phase 4 â€” Transfers
 - [ ] Transaction-safe transfer
 - [ ] Partial quantity transfer
 - [ ] Movement history
 - [ ] Transfer UI
 
-## Phase 5 — Operations
+## Phase 5 â€” Operations
 - [ ] Maintenance
 - [ ] Asset assignments
 
-## Phase 6 — Procurement
+## Phase 6 â€” Procurement
 - [ ] Vendors
 - [ ] Purchases
 - [ ] Purchase items
 
-## Phase 7 — Attachments
+## Phase 7 â€” Attachments
 - [ ] Secure upload
 - [ ] Secure download
 - [ ] Documents UI
 
-## Phase 8 — Audit
+## Phase 8 â€” Audit
 - [ ] Auditable trait
 - [ ] Observer
 - [ ] Events/listeners
 - [ ] Audit viewer
 
-## Phase 9 — RBAC
+## Phase 9 â€” RBAC
 - [ ] Permission seeders
 - [ ] User management
 - [ ] Role management
 - [ ] Policy hardening
 
-## Phase 10 — Dashboard
+## Phase 10 â€” Dashboard
 - [ ] Summary
 - [ ] Charts
 - [ ] Global search
 
-## Phase 11 — Reports
+## Phase 11 â€” Reports
 - [ ] Inventory reports
 - [ ] CSV
 - [ ] Excel
 - [ ] PDF
 
-## Phase 12 — QR
+## Phase 12 â€” QR
 - [ ] QR hook points
 - [ ] Public lookup design
 
-## Phase 13 — Hardening
+## Phase 13 â€” Hardening
 - [ ] Tests
 - [ ] OpenAPI
 - [ ] Performance/N+1 audit

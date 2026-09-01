@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import ExplorerPage from '../pages/ExplorerPage.vue';
 import LoginPage from '../pages/LoginPage.vue';
+import TaxonomyPage from '../pages/TaxonomyPage.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -8,6 +9,7 @@ const router = createRouter({
         { path: '/', redirect: '/explorer' },
         { path: '/login', component: LoginPage, meta: { guest: true } },
         { path: '/explorer', component: ExplorerPage, meta: { requiresAuth: true } },
+        { path: '/taxonomy', component: TaxonomyPage, meta: { requiresAuth: true } },
         { path: '/:pathMatch(.*)*', redirect: '/explorer' },
     ],
 });

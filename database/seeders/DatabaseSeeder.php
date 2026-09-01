@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             LocationPermissionSeeder::class,
             LocationHierarchySeeder::class,
+            AssetTaxonomyPermissionSeeder::class,
+            AssetTaxonomySeeder::class,
         ]);
 
         $user = User::query()->firstOrCreate([

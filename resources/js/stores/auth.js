@@ -9,6 +9,7 @@ export const useAuthStore = defineStore('auth', () => {
     const token = ref(localStorage.getItem(TOKEN_KEY));
     const user = ref(JSON.parse(localStorage.getItem(USER_KEY) || 'null'));
     const isAuthenticated = computed(() => Boolean(token.value));
+    const isSuperAdmin = computed(() => user.value?.roles?.includes('Super Admin') ?? false);
 
     function persist() {
         if (token.value) {
@@ -51,8 +52,8 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     function can(permission) {
-        return user.value?.permissions?.includes(permission) ?? false;
+        return (this.isSuperAdmin || user.value?.permissions?.includes(permission)) ?? false;
     }
 
-    return { token, user, isAuthenticated, login, restoreUser, logout, clear, can };
+    return { token, user, isAuthenticated, isSuperAdmin, login, restoreUser, logout, clear, can };
 });

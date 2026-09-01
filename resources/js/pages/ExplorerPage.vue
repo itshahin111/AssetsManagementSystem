@@ -120,6 +120,7 @@ onBeforeUnmount(() => window.removeEventListener('asset-system:unauthenticated',
                         <p class="text-sm font-semibold">{{ auth.user?.name || 'Loading…' }}</p>
                         <p class="text-xs text-slate-500">{{ auth.user?.roles?.join(', ') }}</p>
                     </div>
+                    <router-link to="/taxonomy" class="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-400 hover:bg-slate-50">Asset taxonomy</router-link>
                     <button class="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-400 hover:bg-slate-50" @click="signOut">Sign out</button>
                 </div>
             </div>
