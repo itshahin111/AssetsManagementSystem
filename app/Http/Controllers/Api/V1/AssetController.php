@@ -21,7 +21,7 @@ class AssetController extends Controller
         $this->authorize('viewAny', Asset::class);
 
         $query = Asset::query()
-            ->with(['assetCategory', 'assetType']);
+            ->with(['assetCategory', 'assetType', 'building', 'floor', 'room']);
 
         if ($request->filled('status')) {
             $query->where('status', $request->string('status')->toString());
