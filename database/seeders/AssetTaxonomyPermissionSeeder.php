@@ -22,6 +22,10 @@ class AssetTaxonomyPermissionSeeder extends Seeder
             'asset_types.create',
             'asset_types.update',
             'asset_types.delete',
+            'assets.view',
+            'assets.create',
+            'assets.update',
+            'assets.delete',
         ];
 
         foreach ($permissions as $permission) {

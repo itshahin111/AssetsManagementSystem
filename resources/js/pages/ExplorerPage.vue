@@ -1,4 +1,4 @@
-<script setup>
+﻿<script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import LocationForm from '../components/LocationForm.vue';
@@ -117,10 +117,10 @@ onBeforeUnmount(() => window.removeEventListener('asset-system:unauthenticated',
                 </div>
                 <div class="flex items-center gap-3">
                     <div class="hidden text-right sm:block">
-                        <p class="text-sm font-semibold">{{ auth.user?.name || 'Loading…' }}</p>
+                        <p class="text-sm font-semibold">{{ auth.user?.name || 'Loadingâ€¦' }}</p>
                         <p class="text-xs text-slate-500">{{ auth.user?.roles?.join(', ') }}</p>
                     </div>
-                    <router-link to="/taxonomy" class="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-400 hover:bg-slate-50">Asset taxonomy</router-link>
+                    <router-link to="/taxonomy" class="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-400 hover:bg-slate-50">Asset taxonomy</router-link><router-link to="/assets" class="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-400 hover:bg-slate-50">Assets</router-link>
                     <button class="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-400 hover:bg-slate-50" @click="signOut">Sign out</button>
                 </div>
             </div>
@@ -129,7 +129,7 @@ onBeforeUnmount(() => window.removeEventListener('asset-system:unauthenticated',
         <div class="mx-auto max-w-7xl px-5 py-8 sm:px-8">
             <section class="mb-8 flex flex-col justify-between gap-5 rounded-2xl bg-slate-950 px-6 py-6 text-white shadow-xl shadow-slate-300/50 sm:flex-row sm:items-end sm:px-8">
                 <div>
-                    <p class="text-sm font-medium text-sky-300">Phase 1 · Foundation data</p>
+                    <p class="text-sm font-medium text-sky-300">Phase 1 Â· Foundation data</p>
                     <h2 class="mt-1 text-2xl font-semibold tracking-tight">Map every space before tracking any asset.</h2>
                     <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-300">Buildings contain floors, floors contain rooms, and room types keep the layout consistent for future asset placement.</p>
                 </div>
@@ -148,12 +148,12 @@ onBeforeUnmount(() => window.removeEventListener('asset-system:unauthenticated',
                     <div class="mb-4 flex items-center justify-between">
                         <div>
                             <h2 class="text-lg font-semibold">Buildings &amp; rooms</h2>
-                            <p class="text-sm text-slate-500">A live, permission-aware view of the school’s physical structure.</p>
+                            <p class="text-sm text-slate-500">A live, permission-aware view of the schoolâ€™s physical structure.</p>
                         </div>
-                        <button class="rounded-lg p-2 text-slate-500 transition hover:bg-white hover:text-slate-900" title="Refresh hierarchy" @click="load">↻</button>
+                        <button class="rounded-lg p-2 text-slate-500 transition hover:bg-white hover:text-slate-900" title="Refresh hierarchy" @click="load">â†»</button>
                     </div>
 
-                    <div v-if="loading" class="rounded-2xl border border-slate-200 bg-white p-10 text-center text-sm text-slate-500">Loading location hierarchy…</div>
+                    <div v-if="loading" class="rounded-2xl border border-slate-200 bg-white p-10 text-center text-sm text-slate-500">Loading location hierarchyâ€¦</div>
 
                     <div v-else-if="!hierarchy.length" class="rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center">
                         <p class="font-medium text-slate-800">No buildings yet</p>
@@ -171,12 +171,12 @@ onBeforeUnmount(() => window.removeEventListener('asset-system:unauthenticated',
                                         <span :class="building.status === 'active' ? 'status-active' : 'status-inactive'">{{ building.status }}</span>
                                     </div>
                                     <p v-if="building.description" class="mt-1 text-sm text-slate-300">{{ building.description }}</p>
-                                    <p class="mt-3 text-xs text-slate-400">{{ building.floors.length }} floor{{ building.floors.length === 1 ? '' : 's' }} · {{ building.rooms_count }} room{{ building.rooms_count === 1 ? '' : 's' }}</p>
+                                    <p class="mt-3 text-xs text-slate-400">{{ building.floors.length }} floor{{ building.floors.length === 1 ? '' : 's' }} Â· {{ building.rooms_count }} room{{ building.rooms_count === 1 ? '' : 's' }}</p>
                                 </div>
                                 <div class="flex flex-wrap gap-2">
                                     <button v-if="auth.can('buildings.update')" class="mini-button-dark" @click="openEditor('building', building)">Edit</button>
                                     <button v-if="canManageFloors" class="mini-button-dark" @click="openEditor('floor', { building_id: building.id })">+ Floor</button>
-                                    <button v-if="canDeleteBuildings" :disabled="deletingId === `building-${building.id}`" class="mini-button-danger" @click="remove('building', building)">{{ deletingId === `building-${building.id}` ? 'Deleting…' : 'Delete' }}</button>
+                                    <button v-if="canDeleteBuildings" :disabled="deletingId === `building-${building.id}`" class="mini-button-danger" @click="remove('building', building)">{{ deletingId === `building-${building.id}` ? 'Deletingâ€¦' : 'Delete' }}</button>
                                 </div>
                             </header>
 
@@ -188,7 +188,7 @@ onBeforeUnmount(() => window.removeEventListener('asset-system:unauthenticated',
                                             <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-sky-50 text-sm font-bold text-sky-700">{{ floor.level }}</span>
                                             <div>
                                                 <p class="font-semibold text-slate-800">{{ floor.name }}</p>
-                                                <p class="text-xs text-slate-500">Level {{ floor.level }} · {{ floor.rooms.length }} room{{ floor.rooms.length === 1 ? '' : 's' }}</p>
+                                                <p class="text-xs text-slate-500">Level {{ floor.level }} Â· {{ floor.rooms.length }} room{{ floor.rooms.length === 1 ? '' : 's' }}</p>
                                             </div>
                                             <span :class="floor.status === 'active' ? 'status-active-light' : 'status-inactive-light'">{{ floor.status }}</span>
                                         </div>
@@ -203,11 +203,11 @@ onBeforeUnmount(() => window.removeEventListener('asset-system:unauthenticated',
                                         <div v-for="room in floor.rooms" :key="room.id" class="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3">
                                             <div class="min-w-0">
                                                 <p class="truncate text-sm font-semibold text-slate-800">{{ room.name }}</p>
-                                                <p class="mt-0.5 truncate text-xs text-slate-500"><span class="font-mono">{{ room.code }}</span><span v-if="room.room_type"> · {{ room.room_type.name }}</span><span v-if="room.capacity"> · {{ room.capacity }} seats</span></p>
+                                                <p class="mt-0.5 truncate text-xs text-slate-500"><span class="font-mono">{{ room.code }}</span><span v-if="room.room_type"> Â· {{ room.room_type.name }}</span><span v-if="room.capacity"> Â· {{ room.capacity }} seats</span></p>
                                             </div>
                                             <div class="ml-3 flex shrink-0 gap-1">
-                                                <button v-if="auth.can('rooms.update')" class="rounded-md p-1.5 text-slate-500 hover:bg-white hover:text-sky-700" title="Edit room" @click="openEditor('room', room)">✎</button>
-                                                <button v-if="canDeleteRooms" class="rounded-md p-1.5 text-slate-500 hover:bg-white hover:text-rose-700" title="Delete room" @click="remove('room', room)">✕</button>
+                                                <button v-if="auth.can('rooms.update')" class="rounded-md p-1.5 text-slate-500 hover:bg-white hover:text-sky-700" title="Edit room" @click="openEditor('room', room)">âœŽ</button>
+                                                <button v-if="canDeleteRooms" class="rounded-md p-1.5 text-slate-500 hover:bg-white hover:text-rose-700" title="Delete room" @click="remove('room', room)">âœ•</button>
                                             </div>
                                         </div>
                                     </div>
@@ -274,3 +274,4 @@ onBeforeUnmount(() => window.removeEventListener('asset-system:unauthenticated',
 .status-active-light { @apply rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700; }
 .status-inactive-light { @apply rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600; }
 </style>
+

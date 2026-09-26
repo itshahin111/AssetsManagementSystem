@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AssetCategoryController;
+use App\Http\Controllers\Api\V1\AssetController;
 use App\Http\Controllers\Api\V1\AssetTypeController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\BuildingController;
@@ -28,5 +29,6 @@ Route::prefix('v1')->group(function (): void {
 
         Route::apiResource('asset-categories', AssetCategoryController::class);
         Route::apiResource('asset-types', AssetTypeController::class);
+        Route::apiResource('assets', AssetController::class);
     });
 });
