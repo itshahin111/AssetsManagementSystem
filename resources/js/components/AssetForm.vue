@@ -1,5 +1,5 @@
-﻿<script setup>
-import { h, ref, watch, defineComponent, onMounted } from 'vue';
+<script setup>
+import { h, ref, watch, computed, defineComponent, onMounted } from 'vue';
 import { assetsApi } from '../api/assets';
 import { useLocationStore } from '../stores/locations';
 import { useTaxonomyStore } from '../stores/taxonomy';
@@ -63,12 +63,24 @@ async function submit() {
 
 async function loadOptions() {
     await taxonomyStore.loadAll();
+    await locationStore.loadAll();
     categories.value = taxonomyStore.assetCategories;
     types.value = [];
     buildings.value = locationStore.buildings;
-    floors.value = locationStore.floors;
-    rooms.value = locationStore.rooms;
+    // floors and rooms will be set via computed properties below
 }
+
+// Computed: floors filtered by selected building
+const filteredFloors = computed(() => {
+    const buildingId = formRef.value.building_id ? Number(formRef.value.building_id) : null;
+    return locationStore.floors.filter(floor => floor.building_id === buildingId);
+});
+
+// Computed: rooms filtered by selected floor
+const filteredRooms = computed(() => {
+    const floorId = formRef.value.floor_id ? Number(formRef.value.floor_id) : null;
+    return locationStore.rooms.filter(room => room.floor_id === floorId);
+});
 
 function applyTypeFilter() {
     const categoryId = formRef.value.asset_category_id;
@@ -82,17 +94,32 @@ function applyTypeFilter() {
     );
 }
 
-watch([() => formRef.value.asset_category_id, () => formRef.value.building_id], (newValues, oldValues) => {
-    if (oldValues[0] !== newValues[0]) {
+// Update floors/rooms refs from computed properties
+watch([filteredFloors, filteredRooms], (newFloors, newRooms) => {
+    floors.value = newFloors;
+    rooms.value = newRooms;
+});
+
+// Watch category change ? clear type
+watch(() => formRef.value.asset_category_id, (newCategoryId, oldCategoryId) => {
+    if (newCategoryId !== oldCategoryId) {
         formRef.value.asset_type_id = '';
+        applyTypeFilter();
     }
-    applyTypeFilter();
-    if (newValues[1]) {
-        floors.value = locationStore.floors;
-        rooms.value = locationStore.rooms;
-    } else {
-        floors.value = [];
-        rooms.value = [];
+});
+
+// Watch building change ? clear floor and room
+watch(() => formRef.value.building_id, (newBuildingId, oldBuildingId) => {
+    if (newBuildingId !== oldBuildingId) {
+        formRef.value.floor_id = '';
+        formRef.value.room_id = '';
+    }
+});
+
+// Watch floor change ? clear room
+watch(() => formRef.value.floor_id, (newFloorId, oldFloorId) => {
+    if (newFloorId !== oldFloorId) {
+        formRef.value.room_id = '';
     }
 });
 
@@ -146,14 +173,14 @@ onMounted(async () => {
                     <label class="block"><span class="text-sm font-medium text-slate-700">Floor</span>
                         <select v-model="formRef.floor_id" required class="input" :disabled="!formRef.building_id">
                             <option disabled value="">Select a floor</option>
-                            <option v-for="floor in floors" :key="floor.id" :value="floor.id">{{ floor.name }}</option>
+                            <option v-for="floor in filteredFloors" :key="floor.id" :value="floor.id">{{ floor.name }}</option>
                         </select>
                         <span v-if="errors.floor_id" class="mt-1.5 block text-xs font-medium text-rose-600">{{ errors.floor_id[0] }}</span>
                     </label>
                     <label class="block"><span class="text-sm font-medium text-slate-700">Room</span>
                         <select v-model="formRef.room_id" required class="input" :disabled="!formRef.floor_id">
                             <option disabled value="">Select a room</option>
-                            <option v-for="room in rooms" :key="room.id" :value="room.id">{{ room.name }}</option>
+                            <option v-for="room in filteredRooms" :key="room.id" :value="room.id">{{ room.name }}</option>
                         </select>
                         <span v-if="errors.room_id" class="mt-1.5 block text-xs font-medium text-rose-600">{{ errors.room_id[0] }}</span>
                     </label>
@@ -193,7 +220,7 @@ onMounted(async () => {
             <footer class="flex justify-end gap-3 border-t border-slate-200 px-6 py-4">
                 <button type="button" class="rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-100" @click="$emit('cancel')">Cancel</button>
                 <button type="button" :disabled="submitting" class="rounded-xl bg-sky-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-sky-500 disabled:cursor-not-allowed disabled:opacity-60" @click="submit">
-                    {{ submitting ? 'Saving…' : 'Save changes' }}
+                    {{ submitting ? 'Saving�' : 'Save changes' }}
                 </button>
             </footer>
         </section>

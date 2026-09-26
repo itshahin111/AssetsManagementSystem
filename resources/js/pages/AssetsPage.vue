@@ -17,6 +17,7 @@ const search = ref('');
 const filterType = ref('');
 const filterStatus = ref('');
 const editor = ref(undefined);
+const viewingAsset = ref(undefined);
 const deletingId = ref(null);
 
 const canView = computed(() => auth.can('assets.view'));
@@ -69,7 +70,7 @@ async function remove(record) {
     deletingId.value = record.id;
     notice.value = '';
     try {
-        const response = await assetsApi.remove(record.id);
+        const response = await assetsApi.remove('assets', record.id);
         notice.value = response.message || 'Asset deleted successfully.';
         await load();
     } catch (error) {
@@ -80,7 +81,7 @@ async function remove(record) {
 }
 
 function viewAsset(asset) {
-    router.push(`/assets/${asset.id}`);
+    viewingAsset.value = asset;
 }
 
 function handleUnauthenticated() {
@@ -205,6 +206,62 @@ onBeforeUnmount(() => {
             @cancel="editor = undefined"
             @saved="saved"
         />
+
+        <div v-if="viewingAsset" class="fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-4">
+            <div @click.stop class="bg-white rounded-xl shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+                    <h2 class="text-lg font-semibold text-slate-900">Asset Details</h2>
+                    <button @click="viewingAsset = undefined" class="text-slate-400 hover:text-slate-600 transition" aria-label="Close">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+                <div class="p-6 space-y-5">
+                    <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Name</dt>
+                            <dd class="mt-1 text-sm text-slate-900">{{ viewingAsset.name }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Code</dt>
+                            <dd class="mt-1 text-sm text-slate-900">{{ viewingAsset.code }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Category</dt>
+                            <dd class="mt-1 text-sm text-slate-900">{{ viewingAsset.asset_category?.name || '—' }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Asset Type</dt>
+                            <dd class="mt-1 text-sm text-slate-900">{{ viewingAsset.asset_type?.name || '—' }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Building</dt>
+                            <dd class="mt-1 text-sm text-slate-900">{{ viewingAsset.building?.name || '—' }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Floor</dt>
+                            <dd class="mt-1 text-sm text-slate-900">{{ viewingAsset.floor?.name || '—' }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Room</dt>
+                            <dd class="mt-1 text-sm text-slate-900">{{ viewingAsset.room?.name || '—' }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Status</dt>
+                            <dd class="mt-1">
+                                <span :class="viewingAsset.status === 'active' ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-600'" class="rounded-full px-2 py-0.5 text-xs font-medium">{{ viewingAsset.status }}</span>
+                            </dd>
+                        </div>
+                    </dl>
+                    <div v-if="viewingAsset.description" class="pt-4 border-t border-slate-200">
+                        <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Description</dt>
+                        <dd class="mt-1 text-sm text-slate-700 whitespace-pre-wrap">{{ viewingAsset.description }}</dd>
+                    </div>
+                </div>
+                <div class="px-6 py-4 border-t border-slate-200 bg-slate-50 rounded-b-xl">
+                    <button @click="viewingAsset = undefined" class="w-full sm:w-auto rounded-lg px-4 py-2 text-sm font-medium text-sky-700 bg-sky-50 hover:bg-sky-100 transition">Close</button>
+                </div>
+            </div>
+        </div>
     </main>
 </template>
 
